@@ -2,3 +2,4 @@ title: A blog
 theme: minima
 titles_from_headings:
   collections: true
+  strip_titles: true
