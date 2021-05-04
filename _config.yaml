@@ -3,6 +3,6 @@ theme: minima
 titles_from_headings:
   collections: true
   strip_titles: true
-google_analytics: G-9HBECSGYRQ
+google_analytics: UA-196241499-1
 disqus:
   shortname: lkslawek
