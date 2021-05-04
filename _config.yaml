@@ -2,7 +2,7 @@ title: A blog
 theme: minima
 titles_from_headings:
   collections: true
-  strip_titles: true
+  strip_title: true
 google_analytics: UA-196241499-1
 disqus:
   shortname: lkslawek
