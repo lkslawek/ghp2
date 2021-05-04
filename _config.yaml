@@ -6,3 +6,4 @@ titles_from_headings:
 google_analytics: UA-196241499-1
 disqus:
   shortname: lkslawek
+show_excerpts: true
