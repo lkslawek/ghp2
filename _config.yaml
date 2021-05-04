@@ -3,3 +3,4 @@ theme: minima
 titles_from_headings:
   collections: true
   strip_titles: true
+google_analytics: G-9HBECSGYRQ
