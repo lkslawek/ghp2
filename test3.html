@@ -22,7 +22,7 @@
   color: var(--vga-white);
 }
 
-.frame:hover {
+.frame-h:hover {
   background: var(--vga-black);
   color: var(--vga-black);
 }
@@ -142,12 +142,90 @@ button:hover {
   color: var(--vga-black);
 }
 
+.frame2 {
+  background: var(--vga-lightgray);
+  color: var(--vga-white);
+}
+
+.frame-h2-hover:hover {
+  background: var(--vga-black);
+  color: var(--vga-black);
+}
+
+.close2 {
+  background: var(--vga-lightgray);
+  color: var(--vga-lightgreen);
+}
+
+.close2-hover:hover {
+  background: var(--vga-black);
+  color: var(--vga-magenta);
+}
+
+.outline2 {
+  background: var(--vga-blue);
+  color: var(--vga-black);
+}
+
+.outline2-hover:hover {
+  background: var(--vga-brown);
+  color: var(--vga-lightgray);
+}
+
+.text2 {
+  background: var(--vga-lightgray);
+  color: var(--vga-black);
+}
+
+.text2-hover:hover {
+  background: var(--vga-black);
+  color: var(--vga-lightgray);
+}
+
+.link2 {
+  background: var(--vga-lightgray);
+  color: var(--vga-yellow);
+}
+
+.link2-active {
+  background: var(--vga-blue);
+  color: var(--vga-yellow);
+}
+
+.link2-hover:hover {
+  background: var(--vga-brown);
+  color: var(--vga-blue);
+}
+
+.button2 {
+  background: var(--vga-green);
+}
+
+.button2-hover:hover {
+  background: var(--vga-magenta);
+  color: var(--vga-black);
+}
+
+.button-shadow2 {
+  background: var(--vga-lightgray);
+  color: var(--vga-black);
+}
+
+.button-shadow2-hover:hover {
+  background: var(--vga-black);
+  color: var(--vga-lightgray);
+}
+
 body {
   background: var(--vga-blue);
 }
 
 h1 {
   color: var(--vga-lightgray);
+}
+
+pre {
+  font-weight: bold;
 }
 </style>
 
@@ -161,6 +239,18 @@ h1 {
   function link_mouse_leave() {
     document.querySelectorAll(".link-hover").forEach((e) => {
       e.setAttribute("class", "link");
+    });
+  }
+
+  function link_mouse_enter2() {
+    document.querySelectorAll(".link2").forEach((e) => {
+      e.setAttribute("class", "link2-active");
+    });
+  }
+
+  function link_mouse_leave2() {
+    document.querySelectorAll(".link2-active").forEach((e) => {
+      e.setAttribute("class", "link2");
     });
   }
 
@@ -267,6 +357,70 @@ h1 {
     document.body.appendChild(pre);
   }
 
+  function draw_dialog2() {
+    let content = '';
+    let last_mask;
+
+    function draw_line(line, mask) {
+      for (let i = 0; i < line.length; ++i) {
+        let symbol = line[i];
+
+        if (symbol === '\n') {
+          content += '\n';
+          continue;
+        }
+
+        let symbol_mask = mask[i];
+        let symbol_class = get_class(symbol_mask) + "2";
+
+        if (last_mask !== symbol_mask) {
+          switch (last_mask) {
+            case 'L':
+              content += '</a>'
+              break;
+            case 'B':
+              content += '</button>'
+          }
+
+          switch (symbol_mask) {
+            case 'L':
+              content += '<a>';
+              break;
+            case 'B':
+              content += '<button>';
+          }
+
+          if (last_mask !== undefined)
+            content += '</span>';
+          content += `<span class="${symbol_class}">`;
+
+          last_mask = symbol_mask;
+        }
+
+        content += `<span class="${symbol_class}-hover">${symbol}</span>`
+      }
+    }
+
+
+    for (let i = 0; i < dialog.length; ++i)
+      draw_line(dialog[i], mask[i]);
+
+    const pre = document.createElement('pre');
+    pre.className = 'dialog';
+    pre.innerHTML = content;
+
+    pre.querySelectorAll('a').forEach((a) => {
+      a.setAttribute('href', 'privacy.html');
+      a.addEventListener('mouseenter', link_mouse_enter2);
+      a.addEventListener('mouseleave', link_mouse_leave2);
+    })
+
+    const button = pre.querySelector('button');
+    button.addEventListener('click', function() { alert('click!'); });
+
+    document.body.appendChild(pre);
+  }
+
   function draw_preview() {
     let content = '';
     let current_class;
@@ -306,5 +460,7 @@ h1 {
     draw_preview();
     document.body.insertAdjacentHTML('beforeend', '<h1>The real deal?</h1>');
     draw_dialog();
+    document.body.insertAdjacentHTML('beforeend', '<h1>A wild hack</h1>');
+    draw_dialog2();
   }
 </script>
