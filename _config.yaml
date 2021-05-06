@@ -1,4 +1,4 @@
-title: A blog
+title: lkslawek's blog
 theme: minima
 titles_from_headings:
   collections: true
@@ -7,3 +7,6 @@ google_analytics: UA-196241499-1
 disqus:
   shortname: lkslawek
 show_excerpts: true
+github_username: lkslawek
+header_pages:
+  - null
