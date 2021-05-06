@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<style>
+:root {
+  --vga-black: #000000;
+  --vga-blue: #0000f8;
+  --vga-green: #00f800;
+  --vga-magenta: #a800a8;
+  --vga-brown: #a85700;
+  --vga-lightgray: #a8a8a8;
+  --vga-lightgreen: #57ff57;
+  --vga-yellow: #ffff57;
+  --vga-white: #ffffff;
+}
+
+.dialog {
+  cursor: none;
+}
+
+.frame {
+  background: var(--vga-lightgray);
+  color: var(--vga-white);
+}
+
+.frame:hover {
+  background: var(--vga-black);
+  color: var(--vga-black);
+}
+
+.close {
+  background: var(--vga-lightgray);
+  color: var(--vga-lightgreen);
+}
+
+.close:hover {
+  background: var(--vga-black);
+  color: var(--vga-magenta);
+}
+
+.outline {
+  background: var(--vga-blue);
+  color: var(--vga-black);
+}
+
+.outline:hover {
+  background: var(--vga-brown);
+  color: var(--vga-lightgray);
+}
+
+.text {
+  background: var(--vga-lightgray);
+  color: var(--vga-black);
+}
+
+.text:hover {
+  background: var(--vga-black);
+  color: var(--vga-lightgray);
+}
+
+.link {
+  background: var(--vga-lightgray);
+  color: var(--vga-yellow);
+}
+
+.link-hover {
+  background: var(--vga-blue);
+  color: var(--vga-yellow);
+}
+
+.link-hover:hover {
+  background: var(--vga-brown);
+  color: var(--vga-blue);
+}
+
+.button {
+  background: var(--vga-green);
+}
+
+.button:hover {
+  background: var(--vga-magenta);
+  color: var(--vga-black);
+}
+
+.button-shadow {
+  background: var(--vga-lightgray);
+  color: var(--vga-black);
+}
+
+.button-shadow:hover {
+  background: var(--vga-black);
+  color: var(--vga-lightgray);
+}
+
+a {
+  text-decoration: none;
+  cursor: none;
+}
+
+button {
+  all: unset;
+
+  background: var(--vga-green);
+  color: var(--vga-black);
+}
+
+button:hover {
+  color: var(--vga-white);
+}
+
+.preview-frame {
+  background: var(--vga-lightgray);
+  color: var(--vga-white);
+}
+
+.preview-close {
+  background: var(--vga-lightgray);
+  color: var(--vga-lightgreen);
+}
+
+.preview-outline {
+  background: var(--vga-blue);
+  color: var(--vga-black);
+}
+
+.preview-text {
+  background: var(--vga-lightgray);
+  color: var(--vga-black);
+}
+
+.preview-link {
+  background: var(--vga-lightgray);
+  color: var(--vga-yellow);
+}
+
+.preview-button {
+  background: var(--vga-green);
+  color: var(--vga-black);
+}
+
+.preview-button-shadow {
+  background: var(--vga-lightgray);
+  color: var(--vga-black);
+}
+</style>
+
+<script>
+  function link_mouse_enter() {
+    document.querySelectorAll(".link").forEach((e) => {
+      e.setAttribute("class", "link-hover");
+    });
+  }
+
+  function link_mouse_leave() {
+    document.querySelectorAll(".link-hover").forEach((e) => {
+      e.setAttribute("class", "link");
+    });
+  }
+
+  const dialog = [
+    "╔═[▪]══════════════════ Notice ═══════════════════════╗  \n",
+    "║                                                     ║██\n",
+    "║  The site would like to use cookies for statistics  ║██\n",
+    "║  and comments if only you'd be so kind to accept.   ║██\n",
+    "║                                                     ║██\n",
+    "║                                            Accept ▅ ║██\n",
+    "║                                            ▀▀▀▀▀▀▀▀ ║██\n",
+    "╚═════════════════════════════════════════════════════╝██\n",
+    "  ███████████████████████████████████████████████████████",
+  ];
+
+  const mask = [
+    "FFFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFOO",
+    "F                                                     FOO",
+    "F                             LLLLLLLLLLLLLLLLLLLLLL  FOO",
+    "F  LLLLLLLLLLLL                                       FOO",
+    "F                                                     FOO",
+    "F                                           BBBBBBBBS FOO",
+    "F                                            SSSSSSSS FOO",
+    "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFOO",
+    "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+  ];
+
+  function get_class(mask) {
+    switch (mask) {
+      case 'F':
+        return 'frame';
+      case 'C':
+        return 'close';
+      case 'O':
+        return 'outline';
+      case 'L':
+        return 'link';
+      case 'B':
+        return 'button'
+      case 'S':
+        return 'button-shadow';
+      default:
+        return 'text';
+    }
+  }
+
+  function draw_dialog() {
+    let content = '';
+    let last_mask;
+
+    function draw_line(line, mask) {
+      for (let i = 0; i < line.length; ++i) {
+        let symbol = line[i];
+
+        if (symbol === '\n') {
+          content += '\n';
+          continue;
+        }
+
+        let symbol_mask = mask[i];
+        let symbol_class = get_class(symbol_mask);
+
+        if (last_mask !== symbol_mask) {
+          switch (last_mask) {
+            case 'L':
+              content += '</a>'
+              break;
+            case 'B':
+              content += '</button>'
+          }
+
+          switch (symbol_mask) {
+            case 'L':
+              content += '<a>';
+              break;
+            case 'B':
+              content += '<button>';
+          }
+
+          last_mask = symbol_mask;
+        }
+
+        content += `<span class="${symbol_class}">${symbol}</span>`
+      }
+    }
+
+
+    for (let i = 0; i < dialog.length; ++i)
+      draw_line(dialog[i], mask[i]);
+
+    const pre = document.createElement('pre');
+    pre.className = 'dialog';
+    pre.innerHTML = content;
+
+    pre.querySelectorAll('a').forEach((a) => {
+      a.setAttribute('href', 'privacy.html');
+      a.addEventListener('mouseenter', link_mouse_enter);
+      a.addEventListener('mouseleave', link_mouse_leave);
+    })
+
+    const button = pre.querySelector('button');
+    button.addEventListener('click', function() { alert('click!'); });
+
+    document.body.appendChild(pre);
+  }
+
+  function draw_preview() {
+    let content = '';
+    let current_class;
+
+    function draw_line(line, mask) {
+      for (let i = 0; i < line.length; ++i) {
+        let symbol = line[i];
+
+        if (symbol === '\n') {
+          content += '\n';
+          continue;
+        }
+
+        let symbol_class = get_class(mask[i]);
+
+        if (symbol_class !== current_class) {
+          if (current_class !== undefined)
+            content += '</span>';
+          content += `<span class="preview-${symbol_class}">`;
+          current_class = symbol_class;
+        }
+
+        content += symbol;
+      }
+    }
+
+    for (let i = 0; i < dialog.length; ++i)
+      draw_line(dialog[i], mask[i]);
+
+    const pre = document.createElement('pre');
+    pre.innerHTML = content;
+    document.body.appendChild(pre);
+  }
+
+  window.onload = function() {
+    document.body.insertAdjacentHTML('beforeend', '<h1>Preview</h1>');
+    draw_preview();
+    document.body.insertAdjacentHTML('beforeend', '<h1>The real deal?</h1>');
+    draw_dialog();
+  }
+</script>
