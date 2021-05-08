@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --vga-black: #000000;
+  --vga-blue: #0000f8;
+  --vga-green: #00f800;
+  --vga-magenta: #a800a8;
+  --vga-brown: #a85700;
+  --vga-lightgray: #a8a8a8;
+  --vga-lightgreen: #57ff57;
+  --vga-yellow: #ffff57;
+  --vga-white: #ffffff;
+}
+
+.borland-outside {
+  font-family: monospace;
+  font-weight: bold;
+  width: 58ch;
+}
+
+.borland-outline {
+  background: var(--vga-lightgray);
+  height: 10em;
+  width: 55ch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 2ex 2ex var(--vga-black);
+  margin-bottom: 2ex;
+  margin-right: 2ex;
+}
+
+.borland-dialog {
+  background: var(--vga-lightgray);
+  border: double 4px var(--vga-white);
+  height: 8em;
+  position: relative;
+  width: 53ch;
+  z-index: 0;
+  padding: 0.25em 0;
+}
+
+.borland-text {
+  margin: 1em 2ch;
+}
+
+.borland-link {
+  all: unset;
+
+  color: var(--vga-yellow);
+}
+
+.borland-link:hover {
+  background: var(--vga-blue);
+}
+
+.borland-button {
+  all: unset;
+
+  background: var(--vga-green);
+  box-shadow: 1ch 1ch var(--vga-black);
+  left: 43ch;
+  padding: 0 1ch;
+  position: relative;
+}
+
+.borland-button:hover {
+  color: var(--vga-white);
+}
+
+.borland-button:active {
+  box-shadow: none;
+  position: relative;
+  left: 44ch;
+}
+
+.borland-title {
+  position: absolute;
+  top: 0;
+  background: var(--vga-lightgray);
+  padding: 0 1ch;
+  color: var(--vga-white);
+  z-index: 1;
+}
+
+.borland-close {
+  position: absolute;
+  top: 0;
+  left: 3ch;
+  z-index: 1;
+  background: var(--vga-lightgray);
+  color: var(--vga-white);
+}
+
+.borland-close-picto {
+  background: var(--vga-green);
+  width: 0.5em;
+  height: 0.5em;
+  margin: 0.1em;
+  display: inline-block;
+}
+
+body {
+  background: var(--vga-blue);
+}
+
+.inverter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: invert(100%);
+  z-index: 2;
+}
+</style>
+
+<div class="borland-outside">
+  <div class="borland-outline">
+    <div class="borland-close">
+      [<span class="borland-close-picto"></span>]
+    </div>
+    <div class="borland-title">
+      Notice
+    </div>
+    <div class="borland-dialog">
+      <pre class="borland-text">
+The site would like to use <a class="borland-link" href="#">cookies for statistics
+and comments</a> if only you'd be so kind to accept.
+      </pre>
+      <button class="borland-button">
+        Accept
+      </button>
+    </div>
+  </div>
+</div>
